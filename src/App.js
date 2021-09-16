@@ -9,7 +9,6 @@ class App extends Component {
         <h1> Consumindo API </h1>
         
         <Table />
-
       </div>
     )
   }
