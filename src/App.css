@@ -39,3 +39,21 @@ form td:last-child {
 form * {
   font-size: 28px;
 }
+
+a {
+  background-color: rgb(117, 201, 250);
+  color: black;
+  font-size: 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  margin: 5px 0px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+  transition: all 500ms;
+}

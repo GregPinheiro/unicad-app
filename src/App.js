@@ -4,36 +4,43 @@ import api from './api';
 
 class App extends Component {
 
-  state = { filmes: [] }
+  state = { items: []}
 
   async componentDidMount(){
+    console.log('Start')
     const response = await api.get('');
-    
-    this.setState({ filmes: response.data });
+    console.log('End')
+    this.setState({ items: response.data.result})
   }
 
   render(){
 
-    const { filmes } = this.state;
+    const { items } = this.state;
 
     return(
       <div>
-        <h1> Consumindo API TVMAZE </h1>
-
+        <h1> Consumindo API </h1>
+        
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>url</th>
+              <th>Nome do Cliente</th>
+              <th>Previsão de Entrega</th>
+              <th>Ponto Partida</th>
+              <th>Ponto Destino</th>
+              <th>Função</th>
             </tr>
           </thead>
           <tbody>
-            {filmes.map(filme => (
+            {items.map(item => (
               <tr>
-                <td>{filme.show.id}</td>
-                <td>{filme.show.name}</td>
-                <td><a href={filme.show.url}>{filme.show.url}</a></td>
+                <td>{item.id}</td>
+                <td>{item.nomeCliente}</td>
+                <td>{item.dataEntrega}</td>
+                <td>{item.pontoPartida}</td>
+                <td>{item.pontoDestino}</td>
+                <td><a>Buscar Rota</a></td>
               </tr>
             ))}
           </tbody>
