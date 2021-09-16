@@ -55,5 +55,5 @@ a {
 
 a:hover {
   text-decoration: underline;
-  transition: all 500ms;
+  background-color: rgb(80, 170, 200);
 }
