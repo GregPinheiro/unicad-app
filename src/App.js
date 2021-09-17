@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import Table from './components/Table';
+import NavBar from './components/Navbar';
 
 class App extends Component {
   render(){
     return(
       <div>
-        <h1> Consumindo API </h1>
-        
-        <Table />
+        <NavBar />
       </div>
     )
   }
