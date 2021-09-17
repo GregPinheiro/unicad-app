@@ -60,10 +60,10 @@ class Form extends Component {
 
         DataService.create(data)
         .then(response => {
-            alert(response.data)
+            alert(response.data)           
         })
         .catch(e => {
-            alert(e);
+            alert(e)
         });
     }
 
