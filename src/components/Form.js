@@ -53,29 +53,30 @@ class Form extends Component {
             nomeCliente: this.state.nomeCliente,
             dataEntrega: this.state.dataEntrega,
             pontoPartida: this.state.pontoPartida,
-            pontoDestino: this.state.pontoDestino,
-
-            submitted: true
+            pontoDestino: this.state.pontoDestino
         }
 
         DataService.create(data)
         .then(response => {
-            alert(response.data)           
+            this.setState({ submitted: true }) 
         })
         .catch(e => {
-            alert(e)
+            console.log(e.response.data);
+            alert(e.response.data);
         });
     }
 
     novaEntrega() {
-        this.state({
+        this.setState({
             nomeCliente: "",
-            dataEntrega: Date(),
+            dataEntrega: "",
             pontoPartida: "",
             pontoDestino: "",
 
             submitted: false
         })
+
+
     }
 
     render() {
@@ -91,7 +92,7 @@ class Form extends Component {
                     </div>
                 ):(
                     <div>
-                        <form className="submit-form">
+                        <div className="submit-form">
                             <div class="form-group">
                                 <label for="NomeCliente">Nome do Cliente: </label>
                                 <input 
@@ -147,7 +148,7 @@ class Form extends Component {
                                 class="btn btn-secondary">Cadastrar Entrega
                             </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 )}
             </div>
