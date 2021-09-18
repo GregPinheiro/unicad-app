@@ -131,8 +131,8 @@ class Form extends Component {
                             </div>
                             <div class="form-group">
                                 <label for="formGroupExampleInput2">Ponto de Destino</label>
-                                <input t
-                                    ype="text" 
+                                <input 
+                                    type="text" 
                                     class="form-control" 
                                     id="PontoDestino" 
                                     required

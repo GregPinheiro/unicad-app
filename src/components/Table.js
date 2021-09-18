@@ -1,31 +1,43 @@
 import React, { Component } from 'react';
 import '../App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Switch, Route, Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../api";
+import DataService from "../services/entregas.service";
+import Rota from './rota';
 
 class Table extends Component {
-    state = { items: [],
-                count: 0 }
+
+    constructor(props) {
+        super(props);
+        this.searchItem = this.searchItem.bind(this);
+        this.state = { items: []}
+    }
+
+    searchItem(e) {
+        DataService.get(e.target.value)
+        .then(response => {
+            let datas = response.data;
+            console.log(datas);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    }
+    
 
     async componentDidMount() { 
         const response = await api.get('');
 
         this.setState({ items: response.data.results})
-        this.setState({ count: response.data.count})
     }
 
     render(){
-        const { items, count } = this.state;
-
-        // const pages = Math.round(count / 5);
-        // const pageNumber = [];
-        // for (let index = 1; index <= pages; index++) {
-        //     pageNumber.push(index);
-        // }
+        const { items } = this.state;
 
         return(
             <div>
+
                 <table class="table table-dark">
                     <thead>
                         <tr>
@@ -41,27 +53,18 @@ class Table extends Component {
                             <td>{item.id}</td>
                             <td>{item.nomeCliente}</td>
                             <td>{item.dataEntrega}</td>
-                            <td><a>Buscar Rota</a></td>
+                            <td>
+                                <button 
+                                    onClick={this.searchItem}
+                                    class="btn btn-secondary"
+                                    value={item.id}>
+                                        Buscar Entrega
+                                </button>
+                            </td>
                         </tr>
                         ))}
                     </tbody>
                 </table>
-
-                {/* <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        {pageNumber.map(page => (
-                            <li class="page-item">
-                                <Link to={"/page"} class="page-link">{page}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-
-                <div className="container mt-3">
-                <Switch>
-                    <Route exact path={["/", "/entregas"]} component={Table} />
-                </Switch>
-                </div> */}
                 
             </div>
         )
