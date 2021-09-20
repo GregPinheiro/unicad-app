@@ -1,44 +1,75 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../api";
 import DataService from "../services/entregas.service";
-import Rota from './rota';
 
 class Table extends Component {
 
     constructor(props) {
         super(props);
         this.searchItem = this.searchItem.bind(this);
-        this.state = { items: []}
+        this.tableView = this.tableView.bind(this);
+        this.state = { 
+            items: [], 
+            item: [],
+            mapsView: false
+        }
     }
 
     searchItem(e) {
         DataService.get(e.target.value)
         .then(response => {
-            let datas = response.data;
-            console.log(datas);
+            this.setState({ item: response.data});
+            console.log(response.data);
+        })
+        .then(() => {
+            this.setState({ mapsView: true })
         })
         .catch(e => {
             console.log(e);
         })
     }
+
+    tableView() {
+        this.setState({ mapsView: false })
+    }
     
 
     async componentDidMount() { 
         const response = await api.get('');
-
-        this.setState({ items: response.data.results})
+        console.log(response)
+        this.setState({ items: response.data})
     }
 
     render(){
-        const { items } = this.state;
+        const { items, item, mapsView } = this.state;
 
         return(
             <div>
+                {mapsView ? (
+                    <div>
+                        <h1>Rota para Entrega</h1>
 
-                <table class="table table-dark">
+                        <table class="table table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col">Informações da Entrega</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Nome do Cliente: {item.nomeCliente} </td></tr>
+                                <tr><td>Data da Entrega: {item.dataEntrega} </td></tr>
+                            </tbody>
+                        </table>
+
+                        <button className="btn btn-sucess"
+                                onClick={this.tableView}>
+                                    Voltar
+                        </button>
+                    </div>
+                ):(
+                    <table class="table table-dark">
                     <thead>
                         <tr>
                         <th scope="col">ID</th>
@@ -58,14 +89,15 @@ class Table extends Component {
                                     onClick={this.searchItem}
                                     class="btn btn-secondary"
                                     value={item.id}>
-                                        Buscar Entrega
+                                        Buscar Rota
                                 </button>
                             </td>
                         </tr>
                         ))}
                     </tbody>
                 </table>
-                
+                ) }
+                                
             </div>
         )
     }
