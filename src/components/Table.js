@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import api from "../api";
 import DataService from "../services/entregas.service";
+import Map from "./Map";
 
 class Table extends Component {
 
@@ -20,11 +20,10 @@ class Table extends Component {
     searchItem(e) {
         DataService.get(e.target.value)
         .then(response => {
-            this.setState({ item: response.data});
-            console.log(response.data);
-        })
-        .then(() => {
-            this.setState({ mapsView: true })
+            this.setState({ 
+                item: response.data,
+                mapsView: true
+            });
         })
         .catch(e => {
             console.log(e);
@@ -60,8 +59,16 @@ class Table extends Component {
                             <tbody>
                                 <tr><td>Nome do Cliente: {item.nomeCliente} </td></tr>
                                 <tr><td>Data da Entrega: {item.dataEntrega} </td></tr>
+                                <tr><td>Ponto de Partida: {item.pontoPartida} </td></tr>
+                                <tr><td>Ponto de Destino: {item.pontoDestino} </td></tr>
                             </tbody>
                         </table>
+
+                        <span  class="align-middle">
+                            <Map enderecos={item} />
+                        </span>
+
+                        <br />
 
                         <button className="btn btn-sucess"
                                 onClick={this.tableView}>

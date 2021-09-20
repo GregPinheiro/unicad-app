@@ -1,21 +1,25 @@
-import React, { Component } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
 
-class Map extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            address: []
-        }
-    }
 
-    render() {
-        return(
-            <div>
-                <h1>Mapa</h1>
-            </div>
-        )
-    }
+const MapIframeMaps = ( { enderecos } ) => {
+
+    const concatpontoDeDestino = enderecos.pontoDestino.replaceAll(' ', "+")
+
+    const concatpontoDePartida = enderecos.pontoPartida.replaceAll(' ', "+")
+
+    // const linkApiGoogle = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAWVDEgv3WLQHVXtE5uz_RDToF-uMjikls"
+    const linkApiGoogle = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCEDIXzpV_bSBNlha5d6dtmY7BGAww08Mo"
+
+    const linkMontado = linkApiGoogle.concat("&origin=",concatpontoDePartida,"&destination=",concatpontoDeDestino,"&avoid=tolls|highways")
+
+    return (
+
+        <iframe
+        width={900}
+        height={500}
+        frameborder={0}
+        src={linkMontado} allowfullscreen>
+        </iframe>
+    )
 }
-
-export default Map;
+export default MapIframeMaps
